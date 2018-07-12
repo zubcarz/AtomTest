@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -11,6 +12,7 @@ public class Farmer : MonoBehaviour {
 
     public float forwardSpeed = 1f;
     public float turnSpeed = 1f;
+    public UnityEvent addScore;
 
     // Use this for initialization
     void Awake()
@@ -46,5 +48,14 @@ public class Farmer : MonoBehaviour {
         playerAnimator.SetFloat("forwardSpeed", speed);
 
         rb.velocity += transform.forward * forwardSpeed * ((speed > 0)? speed : 0);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        print("Collision");
+        if (collision.gameObject.tag == "Item")
+        {
+            print("Item Collision");
+        }
     }
 }

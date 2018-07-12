@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [RequireComponent(typeof(Farmer))]
 public class FarmerControl : MonoBehaviour {
 
@@ -16,10 +15,13 @@ public class FarmerControl : MonoBehaviour {
 
     void FixedUpdate()
     {
-        float verticalInput = Input.GetAxis("Vertical");
-        float horizontalInput = Input.GetAxis("Horizontal");
+        if (!farmer.isEnemy)
+        {
+            float verticalInput = Input.GetAxis("Vertical");
+            float horizontalInput = Input.GetAxis("Horizontal");
 
-        farmer.SetForwardSpeed(verticalInput);
-        farmer.SetTurnSpeed(horizontalInput);
+            farmer.SetForwardSpeed(verticalInput);
+            farmer.SetTurnSpeed(horizontalInput);
+        }
     }
 }

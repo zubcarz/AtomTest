@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -12,7 +11,7 @@ public class Farmer : MonoBehaviour {
 
     public float forwardSpeed = 1f;
     public float turnSpeed = 1f;
-    public UnityEvent addScore;
+    public bool isEnemy = false;
 
     // Use this for initialization
     void Awake()
@@ -38,24 +37,27 @@ public class Farmer : MonoBehaviour {
     public void SetTurnSpeed(float speed)
     {
         playerAnimator.SetFloat("turnSpeed", speed);
-        var rot = transform.rotation;
-        rot.y += Time.deltaTime * turnSpeed * speed;
-        transform.rotation = rot;
+        transform.Rotate(0, Time.deltaTime * turnSpeed * speed, 0);
+    }
+
+    public void SetTurnToAngle(float angle)
+    {
+
     }
 
     public void SetForwardSpeed(float speed)
     {
-        playerAnimator.SetFloat("forwardSpeed", speed);
 
-        rb.velocity += transform.forward * forwardSpeed * ((speed > 0)? speed : 0);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        print("Collision");
-        if (collision.gameObject.tag == "Item")
+        if (isEnemy)
         {
-            print("Item Collision");
+            playerAnimator.SetFloat("forwardSpeed", 0.4f);
         }
+        else
+        {
+            playerAnimator.SetFloat("forwardSpeed", speed);
+        }
+
+       
+        rb.velocity += transform.forward * forwardSpeed * ((speed > 0)? speed : 0);
     }
 }
